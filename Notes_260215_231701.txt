@@ -1,0 +1,1906 @@
++    1 <!DOCTYPE html>
++    2 <html lang="fa" dir="rtl">
++    3 <head>
++    4 <meta charset="UTF-8">
++    5 <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    6 <title>X — برنامه ۱۳۵ روزه</title>
++    7 <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" rel="preload" as="script">
++    8 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
++    9 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
++   10 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
++   11 <style>
++   12 :root {
++   13   --bg-primary: #f0f2f5;
++   14   --bg-secondary: #ffffff;
++   15   --bg-tertiary: #e8eaed;
++   16   --bg-card: #ffffff;
++   17   --bg-input: #f7f8fa;
++   18   --text-primary: #1a1a2e;
++   19   --text-secondary: #4a4a6a;
++   20   --text-muted: #8888a8;
++   21   --border: #d8dce6;
++   22   --border-light: #e8ecf2;
++   23   --accent: #0d9488;
++   24   --accent-light: #14b8a6;
++   25   --accent-bg: rgba(13,148,136,0.08);
++   26   --gold: #d4a017;
++   27   --gold-light: #f0c940;
++   28   --danger: #e74c3c;
++   29   --danger-bg: rgba(231,76,60,0.08);
++   30   --warning: #f39c12;
++   31   --warning-bg: rgba(243,156,18,0.08);
++   32   --success: #27ae60;
++   33   --success-bg: rgba(39,174,96,0.08);
++   34   --info: #3498db;
++   35   --info-bg: rgba(52,152,219,0.08);
++   36   --shadow: 0 2px 12px rgba(0,0,0,0.06);
++   37   --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
++   38   --radius: 14px;
++   39   --radius-sm: 8px;
++   40   --transition: 0.25s cubic-bezier(.4,0,.2,1);
++   41   --nav-height: 64px;
++   42   --tab-height: 52px;
++   43 }
++   44 html.dark {
++   45   --bg-primary: #0f1117;
++   46   --bg-secondary: #1a1d27;
++   47   --bg-tertiary: #252836;
++   48   --bg-card: #1e2130;
++   49   --bg-input: #252836;
++   50   --text-primary: #e8e8f0;
++   51   --text-secondary: #a8a8c0;
++   52   --text-muted: #6868888;
++   53   --border: #2e3144;
++   54   --border-light: #353850;
++   55   --accent: #14b8a6;
++   56   --accent-light: #2dd4bf;
++   57   --accent-bg: rgba(20,184,166,0.12);
++   58   --gold: #f0c940;
++   59   --gold-light: #ffe066;
++   60   --danger: #ff6b6b;
++   61   --danger-bg: rgba(255,107,107,0.12);
++   62   --warning: #ffd43b;
++   63   --warning-bg: rgba(255,212,59,0.12);
++   64   --success: #51cf66;
++   65   --success-bg: rgba(81,207,102,0.12);
++   66   --info: #74c0fc;
++   67   --info-bg: rgba(116,192,252,0.12);
++   68   --shadow: 0 2px 12px rgba(0,0,0,0.2);
++   69   --shadow-lg: 0 8px 32px rgba(0,0,0,0.3);
++   70 }
++   71 * { margin:0; padding:0; box-sizing:border-box; }
++   72 body {
++   73   font-family: 'Vazirmatn', system-ui, sans-serif;
++   74   background: var(--bg-primary);
++   75   color: var(--text-primary);
++   76   min-height: 100vh;
++   77   overflow-x: hidden;
++   78   line-height: 1.7;
++   79 }
++   80 input, textarea, select, button { font-family: inherit; }
++   81 input, textarea, select {
++   82   font-size: 16px;
++   83   background: var(--bg-input);
++   84   color: var(--text-primary);
++   85   border: 1.5px solid var(--border);
++   86   border-radius: var(--radius-sm);
++   87   padding: 10px 14px;
++   88   transition: var(--transition);
++   89   width: 100%;
++   90 }
++   91 input:focus, textarea:focus, select:focus {
++   92   outline: none;
++   93   border-color: var(--accent);
++   94   box-shadow: 0 0 0 3px var(--accent-bg);
++   95 }
++   96 button {
++   97   cursor: pointer;
++   98   border: none;
++   99   border-radius: var(--radius-sm);
++  100   padding: 10px 20px;
++  101   font-weight: 600;
++  102   transition: var(--transition);
++  103   font-size: 14px;
++  104 }
++  105 .btn-primary {
++  106   background: linear-gradient(135deg, var(--accent), var(--accent-light));
++  107   color: #fff;
++  108 }
++  109 .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
++  110 .btn-secondary {
++  111   background: var(--bg-tertiary);
++  112   color: var(--text-primary);
++  113   border: 1.5px solid var(--border);
++  114 }
++  115 .btn-secondary:hover { background: var(--border); }
++  116 .btn-danger { background: var(--danger); color: #fff; }
++  117 .btn-danger:hover { filter: brightness(1.1); }
++  118 .btn-sm { padding: 6px 12px; font-size: 12px; }
++  119 .btn-xs { padding: 4px 8px; font-size: 11px; }
++  120 .btn-icon {
++  121   background: transparent;
++  122   color: var(--text-muted);
++  123   padding: 6px 8px;
++  124   font-size: 14px;
++  125 }
++  126 .btn-icon:hover { color: var(--accent); }
++  127 
++  128 /* Header */
++  129 .app-header {
++  130   background: var(--bg-secondary);
++  131   border-bottom: 1.5px solid var(--border);
++  132   padding: 0 20px;
++  133   height: var(--nav-height);
++  134   display: flex;
++  135   align-items: center;
++  136   justify-content: space-between;
++  137   position: sticky; top: 0; z-index: 100;
++  138   backdrop-filter: blur(12px);
++  139 }
++  140 .app-logo {
++  141   font-size: 22px;
++  142   font-weight: 900;
++  143   background: linear-gradient(135deg, var(--accent), var(--gold));
++  144   -webkit-background-clip: text;
++  145   -webkit-text-fill-color: transparent;
++  146   background-clip: text;
++  147   letter-spacing: -0.5px;
++  148 }
++  149 .app-logo span { font-weight: 400; font-size: 13px; -webkit-text-fill-color: var(--text-muted); }
++  150 .header-actions { display: flex; gap: 8px; align-items: center; }
++  151 .header-actions button { font-size: 16px; }
++  152 
++  153 /* Tab navigation */
++  154 .tab-nav {
++  155   display: flex;
++  156   background: var(--bg-secondary);
++  157   border-bottom: 1.5px solid var(--border);
++  158   overflow-x: auto;
++  159   scrollbar-width: none;
++  160   -webkit-overflow-scrolling: touch;
++  161 }
++  162 .tab-nav::-webkit-scrollbar { display: none; }
++  163 .tab-btn {
++  164   flex: 1;
++  165   min-width: 80px;
++  166   padding: 14px 16px;
++  167   background: transparent;
++  168   color: var(--text-muted);
++  169   font-weight: 600;
++  170   font-size: 13px;
++  171   border-bottom: 3px solid transparent;
++  172   border-radius: 0;
++  173   white-space: nowrap;
++  174   position: relative;
++  175   transition: var(--transition);
++  176 }
++  177 .tab-btn.active {
++  178   color: var(--accent);
++  179   border-bottom-color: var(--accent);
++  180   background: var(--accent-bg);
++  181 }
++  182 .tab-btn i { display: block; font-size: 18px; margin-bottom: 2px; }
++  183 
++  184 /* Main content */
++  185 .main-content { padding: 16px; max-width: 900px; margin: 0 auto; }
++  186 .section { display: none; animation: fadeIn 0.3s ease; }
++  187 .section.active { display: block; }
++  188 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
++  189 
++  190 /* Cards */
++  191 .card {
++  192   background: var(--bg-card);
++  193   border: 1.5px solid var(--border-light);
++  194   border-radius: var(--radius);
++  195   padding: 20px;
++  196   margin-bottom: 16px;
++  197   box-shadow: var(--shadow);
++  198   transition: var(--transition);
++  199 }
++  200 .card-header {
++  201   display: flex;
++  202   justify-content: space-between;
++  203   align-items: center;
++  204   margin-bottom: 16px;
++  205   flex-wrap: wrap;
++  206   gap: 8px;
++  207 }
++  208 .card-title {
++  209   font-size: 16px;
++  210   font-weight: 700;
++  211   color: var(--text-primary);
++  212   display: flex;
++  213   align-items: center;
++  214   gap: 8px;
++  215 }
++  216 .card-title i { color: var(--accent); }
++  217 
++  218 /* Form grid */
++  219 .form-grid {
++  220   display: grid;
++  221   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
++  222   gap: 12px;
++  223   margin-bottom: 16px;
++  224 }
++  225 .form-group { display: flex; flex-direction: column; gap: 4px; }
++  226 .form-group label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
++  227 .form-row { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
++  228 
++  229 /* Todo items */
++  230 .todo-item {
++  231   display: flex;
++  232   align-items: center;
++  233   gap: 10px;
++  234   padding: 12px 14px;
++  235   background: var(--bg-input);
++  236   border-radius: var(--radius-sm);
++  237   margin-bottom: 8px;
++  238   transition: var(--transition);
++  239   border: 1.5px solid transparent;
++  240   cursor: grab;
++  241 }
++  242 .todo-item:hover { border-color: var(--border); }
++  243 .todo-item.completed { opacity: 0.6; }
++  244 .todo-item.completed .todo-text { text-decoration: line-through; }
++  245 .todo-item.dragging { opacity: 0.4; border-color: var(--accent); }
++  246 .todo-check {
++  247   width: 22px; height: 22px; border-radius: 50%;
++  248   border: 2px solid var(--border);
++  249   display: flex; align-items: center; justify-content: center;
++  250   flex-shrink: 0; cursor: pointer; transition: var(--transition);
++  251   background: transparent;
++  252   padding: 0;
++  253 }
++  254 .todo-check.checked {
++  255   background: var(--success);
++  256   border-color: var(--success);
++  257   color: #fff;
++  258 }
++  259 .todo-check i { font-size: 10px; }
++  260 .todo-text { flex: 1; font-size: 14px; }
++  261 .todo-meta { font-size: 11px; color: var(--text-muted); display: flex; gap: 8px; flex-wrap: wrap; }
++  262 .todo-actions { display: flex; gap: 2px; }
++  263 
++  264 /* Tags */
++  265 .tag {
++  266   display: inline-block;
++  267   font-size: 10px;
++  268   font-weight: 600;
++  269   padding: 2px 8px;
++  270   border-radius: 20px;
++  271   white-space: nowrap;
++  272 }
++  273 .tag-danger { background: var(--danger-bg); color: var(--danger); }
++  274 .tag-warning { background: var(--warning-bg); color: var(--warning); }
++  275 .tag-success { background: var(--success-bg); color: var(--success); }
++  276 .tag-info { background: var(--info-bg); color: var(--info); }
++  277 .tag-accent { background: var(--accent-bg); color: var(--accent); }
++  278 
++  279 /* Ebbinghaus timeline */
++  280 .timeline-container { overflow-x: auto; padding-bottom: 10px; }
++  281 .day-selector {
++  282   display: flex;
++  283   gap: 6px;
++  284   padding: 10px 0;
++  285   overflow-x: auto;
++  286   scrollbar-width: thin;
++  287 }
++  288 .day-chip {
++  289   min-width: 44px;
++  290   height: 44px;
++  291   border-radius: 50%;
++  292   display: flex;
++  293   flex-direction: column;
++  294   align-items: center;
++  295   justify-content: center;
++  296   font-size: 12px;
++  297   font-weight: 700;
++  298   background: var(--bg-input);
++  299   border: 2px solid var(--border);
++  300   cursor: pointer;
++  301   transition: var(--transition);
++  302   flex-shrink: 0;
++  303   padding: 0;
++  304   color: var(--text-primary);
++  305 }
++  306 .day-chip span { font-size: 8px; font-weight: 400; color: var(--text-muted); line-height: 1; }
++  307 .day-chip.today { border-color: var(--accent); background: var(--accent-bg); }
++  308 .day-chip.has-reviews { border-color: var(--gold); }
++  309 .day-chip.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
++  310 .day-chip.selected span { color: rgba(255,255,255,0.7); }
++  311 
++  312 /* Review items */
++  313 .review-item {
++  314   display: flex;
++  315   align-items: center;
++  316   gap: 10px;
++  317   padding: 10px 14px;
++  318   border-radius: var(--radius-sm);
++  319   margin-bottom: 6px;
++  320   font-size: 13px;
++  321   transition: var(--transition);
++  322 }
++  323 .review-item.review { background: var(--info-bg); border-right: 3px solid var(--info); }
++  324 .review-item.test { background: var(--warning-bg); border-right: 3px solid var(--warning); }
++  325 .review-item.done { opacity: 0.5; text-decoration: line-through; }
++  326 
++  327 /* Charts */
++  328 .chart-container {
++  329   position: relative;
++  330   height: 280px;
++  331   margin: 12px 0;
++  332 }
++  333 .chart-container canvas { max-height: 100%; }
++  334 
++  335 /* Alerts */
++  336 .alert-bar {
++  337   padding: 10px 14px;
++  338   border-radius: var(--radius-sm);
++  339   font-size: 12px;
++  340   font-weight: 500;
++  341   display: flex;
++  342   align-items: center;
++  343   gap: 8px;
++  344   margin-bottom: 8px;
++  345 }
++  346 .alert-bar.alert-success { background: var(--success-bg); color: var(--success); }
++  347 .alert-bar.alert-warning { background: var(--warning-bg); color: var(--warning); }
++  348 .alert-bar.alert-danger { background: var(--danger-bg); color: var(--danger); }
++  349 .alert-bar.alert-info { background: var(--info-bg); color: var(--info); }
++  350 
++  351 /* Modal */
++  352 .modal-overlay {
++  353   position: fixed; inset: 0;
++  354   background: rgba(0,0,0,0.5);
++  355   display: flex; align-items: center; justify-content: center;
++  356   z-index: 1000;
++  357   animation: fadeIn 0.2s ease;
++  358   padding: 16px;
++  359 }
++  360 .modal-box {
++  361   background: var(--bg-card);
++  362   border-radius: var(--radius);
++  363   padding: 24px;
++  364   max-width: 480px;
++  365   width: 100%;
++  366   box-shadow: var(--shadow-lg);
++  367   max-height: 90vh;
++  368   overflow-y: auto;
++  369 }
++  370 .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
++  371 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
++  372 
++  373 /* Nutrition paste area */
++  374 .paste-area {
++  375   min-height: 200px;
++  376   width: 100%;
++  377   font-size: 13px;
++  378   line-height: 1.8;
++  379   resize: vertical;
++  380 }
++  381 
++  382 /* Stats grid */
++  383 .stats-grid {
++  384   display: grid;
++  385   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
++  386   gap: 12px;
++  387   margin-bottom: 16px;
++  388 }
++  389 .stat-card {
++  390   background: var(--bg-card);
++  391   border: 1.5px solid var(--border-light);
++  392   border-radius: var(--radius);
++  393   padding: 16px;
++  394   text-align: center;
++  395 }
++  396 .stat-value { font-size: 28px; font-weight: 800; color: var(--accent); }
++  397 .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
++  398 
++  399 /* Nutrition bars */
++  400 .nutrient-bar {
++  401   display: flex;
++  402   align-items: center;
++  403   gap: 10px;
++  404   margin-bottom: 10px;
++  405   font-size: 12px;
++  406 }
++  407 .nutrient-name { min-width: 100px; font-weight: 500; color: var(--text-secondary); text-align: left; }
++  408 .nutrient-track {
++  409   flex: 1;
++  410   height: 8px;
++  411   background: var(--bg-tertiary);
++  412   border-radius: 4px;
++  413   overflow: hidden;
++  414 }
++  415 .nutrient-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
++  416 .nutrient-value { min-width: 60px; text-align: left; font-weight: 600; color: var(--text-primary); font-size: 11px; }
++  417 
++  418 /* Empty state */
++  419 .empty-state {
++  420   text-align: center;
++  421   padding: 40px 20px;
++  422   color: var(--text-muted);
++  423 }
++  424 .empty-state i { font-size: 48px; margin-bottom: 12px; display: block; color: var(--border); }
++  425 .empty-state p { font-size: 14px; }
++  426 
++  427 /* Nutrition sub-tabs */
++  428 .sub-tabs {
++  429   display: flex;
++  430   gap: 4px;
++  431   margin-bottom: 16px;
++  432   overflow-x: auto;
++  433   scrollbar-width: none;
++  434   padding-bottom: 4px;
++  435 }
++  436 .sub-tabs::-webkit-scrollbar { display: none; }
++  437 .sub-tab {
++  438   padding: 8px 14px;
++  439   font-size: 12px;
++  440   font-weight: 600;
++  441   border-radius: 20px;
++  442   background: var(--bg-input);
++  443   color: var(--text-muted);
++  444   white-space: nowrap;
++  445   border: 1.5px solid var(--border);
++  446 }
++  447 .sub-tab.active {
++  448   background: var(--accent-bg);
++  449   color: var(--accent);
++  450   border-color: var(--accent);
++  451 }
++  452 
++  453 /* Intervals editor */
++  454 .interval-chips {
++  455   display: flex;
++  456   flex-wrap: wrap;
++  457   gap: 6px;
++  458   margin: 8px 0;
++  459 }
++  460 .interval-chip {
++  461   padding: 4px 12px;
++  462   border-radius: 20px;
++  463   font-size: 12px;
++  464   font-weight: 600;
++  465   background: var(--accent-bg);
++  466   color: var(--accent);
++  467   border: 1.5px solid var(--accent);
++  468   display: flex;
++  469   align-items: center;
++  470   gap: 4px;
++  471 }
++  472 .interval-chip .remove-interval {
++  473   cursor: pointer;
++  474   font-size: 10px;
++  475   opacity: 0.7;
++  476   background: none;
++  477   border: none;
++  478   color: inherit;
++  479   padding: 0 2px;
++  480 }
++  481 
++  482 /* Date picker row */
++  483 .date-nav {
++  484   display: flex;
++  485   align-items: center;
++  486   justify-content: center;
++  487   gap: 12px;
++  488   margin-bottom: 16px;
++  489 }
++  490 .date-nav button { font-size: 18px; }
++  491 .date-nav .current-date {
++  492   font-size: 15px;
++  493   font-weight: 700;
++  494   min-width: 160px;
++  495   text-align: center;
++  496 }
++  497 
++  498 /* Workout intensity */
++  499 .intensity-display {
++  500   display: inline-flex;
++  501   gap: 2px;
++  502 }
++  503 .intensity-dot {
++  504   width: 8px; height: 8px; border-radius: 50%;
++  505   background: var(--border);
++  506 }
++  507 .intensity-dot.filled { background: var(--accent); }
++  508 
++  509 /* Responsive */
++  510 @media (max-width: 600px) {
++  511   .main-content { padding: 12px; }
++  512   .card { padding: 14px; }
++  513   .form-grid { grid-template-columns: 1fr; }
++  514   .stats-grid { grid-template-columns: repeat(2, 1fr); }
++  515   .chart-container { height: 220px; }
++  516   .modal-box { padding: 18px; }
++  517 }
++  518 
++  519 /* Scrollbar */
++  520 ::-webkit-scrollbar { width: 6px; height: 6px; }
++  521 ::-webkit-scrollbar-track { background: transparent; }
++  522 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
++  523 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
++  524 
++  525 /* Notification toast */
++  526 .toast {
++  527   position: fixed;
++  528   bottom: 20px;
++  529   left: 50%;
++  530   transform: translateX(-50%) translateY(100px);
++  531   background: var(--bg-card);
++  532   border: 1.5px solid var(--border);
++  533   border-radius: var(--radius);
++  534   padding: 12px 20px;
++  535   font-size: 13px;
++  536   font-weight: 500;
++  537   box-shadow: var(--shadow-lg);
++  538   z-index: 2000;
++  539   transition: transform 0.3s ease;
++  540   display: flex;
++  541   align-items: center;
++  542   gap: 8px;
++  543 }
++  544 .toast.show { transform: translateX(-50%) translateY(0); }
++  545 .toast i { font-size: 16px; }
++  546 </style>
++  547 </head>
++  548 <body>
++  549 
++  550 <!-- Header -->
++  551 <header class="app-header">
++  552   <div class="app-logo">X <span>۱۳۵ روزه</span></div>
++  553   <div class="header-actions">
++  554     <button class="btn-icon" onclick="showImportExportModal()" title="بکاپ"><i class="fas fa-database"></i></button>
++  555     <button class="btn-icon" id="themeToggle" onclick="toggleTheme()" title="تم"><i class="fas fa-moon"></i></button>
++  556   </div>
++  557 </header>
++  558 
++  559 <!-- Tab Navigation -->
++  560 <nav class="tab-nav" id="tabNav">
++  561   <button class="tab-btn active" data-tab="study" onclick="switchTab('study')">
++  562     <i class="fas fa-book-open"></i> درسی
++  563   </button>
++  564   <button class="tab-btn" data-tab="exercise" onclick="switchTab('exercise')">
++  565     <i class="fas fa-dumbbell"></i> ورزشی
++  566   </button>
++  567   <button class="tab-btn" data-tab="nutrition" onclick="switchTab('nutrition')">
++  568     <i class="fas fa-apple-whole"></i> تغذیه
++  569   </button>
++  570   <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">
++  571     <i class="fas fa-chart-line"></i> آمار
++  572   </button>
++  573 </nav>
++  574 
++  575 <!-- Main Content -->
++  576 <main class="main-content">
++  577 
++  578   <!-- ==================== STUDY SECTION ==================== -->
++  579   <div id="studySection" class="section active">
++  580     <!-- Settings Card -->
++  581     <div class="card">
++  582       <div class="card-header">
++  583         <div class="card-title"><i class="fas fa-cog"></i> تنظیمات دوره</div>
++  584       </div>
++  585       <div class="form-grid">
++  586         <div class="form-group">
++  587           <label>تاریخ شروع</label>
++  588           <input type="date" id="startDate" onchange="saveSettings()">
++  589         </div>
++  590         <div class="form-group">
++  591           <label>تعداد روزها</label>
++  592           <input type="number" id="totalDays" value="135" min="1" max="365" onchange="saveSettings()">
++  593         </div>
++  594       </div>
++  595       <div class="form-group">
++  596         <label>بازه‌های مرور ابینگ‌هاوس (روز پس از مطالعه)</label>
++  597         <div class="interval-chips" id="intervalChips"></div>
++  598         <div class="form-row" style="margin-top:8px">
++  599           <input type="number" id="newInterval" placeholder="مثلاً ۷" min="1" style="max-width:120px">
++  600           <button class="btn-primary btn-sm" onclick="addInterval()"><i class="fas fa-plus"></i> افزودن</button>
++  601         </div>
++  602       </div>
++  603     </div>
++  604 
++  605     <!-- Add Topic -->
++  606     <div class="card">
++  607       <div class="card-header">
++  608         <div class="card-title"><i class="fas fa-plus-circle"></i> افزودن مبحث</div>
++  609       </div>
++  610       <div class="form-grid">
++  611         <div class="form-group">
++  612           <label>نام مبحث</label>
++  613           <input type="text" id="topicName" placeholder="مثلاً: فیزیک - حرکت شناسی">
++  614         </div>
++  615         <div class="form-group">
++  616           <label>ساعت مطالعه</label>
++  617           <input type="number" id="topicHours" placeholder="۲" min="0.5" step="0.5">
++  618         </div>
++  619         <div class="form-group">
++  620           <label>روز مطالعه</label>
++  621           <input type="number" id="topicDay" placeholder="شماره روز" min="1">
++  622         </div>
++  623       </div>
++  624       <button class="btn-primary" onclick="addTopic()"><i class="fas fa-plus"></i> افزودن مبحث</button>
++  625     </div>
++  626 
++  627     <!-- Topics List -->
++  628     <div class="card">
++  629       <div class="card-header">
++  630         <div class="card-title"><i class="fas fa-list-check"></i> مباحث</div>
++  631         <span class="tag tag-accent" id="topicCount">۰ مبحث</span>
++  632       </div>
++  633       <div id="topicsList"></div>
++  634     </div>
++  635 
++  636     <!-- Daily Column -->
++  637     <div class="card">
++  638       <div class="card-header">
++  639         <div class="card-title"><i class="fas fa-calendar-day"></i> ستون روزانه</div>
++  640       </div>
++  641       <div class="date-nav">
++  642         <button class="btn-icon" onclick="changeDay(-1)"><i class="fas fa-chevron-right"></i></button>
++  643         <div class="current-date" id="currentDayLabel">روز ۱</div>
++  644         <button class="btn-icon" onclick="changeDay(1)"><i class="fas fa-chevron-left"></i></button>
++  645       </div>
++  646       <div class="day-selector" id="daySelector"></div>
++  647       <div id="dailyReviews"></div>
++  648     </div>
++  649   </div>
++  650 
++  651   <!-- ==================== EXERCISE SECTION ==================== -->
++  652   <div id="exerciseSection" class="section">
++  653     <!-- Add Workout -->
++  654     <div class="card">
++  655       <div class="card-header">
++  656         <div class="card-title"><i class="fas fa-circle-plus"></i> ثبت تمرین</div>
++  657       </div>
++  658       <div class="form-grid">
++  659         <div class="form-group">
++  660           <label>نام تمرین</label>
++  661           <input type="text" id="workoutName" placeholder="مثلاً: پرس سینه">
++  662         </div>
++  663         <div class="form-group">
++  664           <label>تعداد ست</label>
++  665           <input type="number" id="workoutSets" placeholder="۳" min="1">
++  666         </div>
++  667         <div class="form-group">
++  668           <label>تعداد تکرار</label>
++  669           <input type="number" id="workoutReps" placeholder="۱۲" min="1">
++  670         </div>
++  671         <div class="form-group">
++  672           <label>زمان (دقیقه)</label>
++  673           <input type="number" id="workoutDuration" placeholder="۳۰" min="1">
++  674         </div>
++  675         <div class="form-group">
++  676           <label>شدت (۱-۵)</label>
++  677           <input type="number" id="workoutIntensity" placeholder="۳" min="1" max="5">
++  678         </div>
++  679         <div class="form-group">
++  680           <label>تاریخ</label>
++  681           <input type="date" id="workoutDate">
++  682         </div>
++  683       </div>
++  684       <button class="btn-primary" onclick="addWorkout()"><i class="fas fa-plus"></i> ثبت تمرین</button>
++  685     </div>
++  686 
++  687     <!-- Workout alerts -->
++  688     <div id="workoutAlerts"></div>
++  689 
++  690     <!-- Today's Workouts -->
++  691     <div class="card">
++  692       <div class="card-header">
++  693         <div class="card-title"><i class="fas fa-clipboard-list"></i> تمرینات</div>
++  694         <div class="date-nav" style="margin-bottom:0">
++  695           <button class="btn-icon" onclick="changeWorkoutDate(-1)"><i class="fas fa-chevron-right"></i></button>
++  696           <div class="current-date" id="workoutDateLabel"></div>
++  697           <button class="btn-icon" onclick="changeWorkoutDate(1)"><i class="fas fa-chevron-left"></i></button>
++  698         </div>
++  699       </div>
++  700       <div id="workoutsList"></div>
++  701     </div>
++  702 
++  703     <!-- Weekly Chart -->
++  704     <div class="card">
++  705       <div class="card-header">
++  706         <div class="card-title"><i class="fas fa-chart-bar"></i> نمودار هفتگی</div>
++  707       </div>
++  708       <div class="chart-container"><canvas id="workoutChart"></canvas></div>
++  709     </div>
++  710   </div>
++  711 
++  712   <!-- ==================== NUTRITION SECTION ==================== -->
++  713   <div id="nutritionSection" class="section">
++  714     <!-- Paste Input -->
++  715     <div class="card">
++  716       <div class="card-header">
++  717         <div class="card-title"><i class="fas fa-paste"></i> ورود داده‌های تغذیه</div>
++  718       </div>
++  719       <div class="form-group" style="margin-bottom:12px">
++  720         <label>تاریخ</label>
++  721         <input type="date" id="nutritionDate" style="max-width:200px">
++  722       </div>
++  723       <div class="form-group">
++  724         <label>داده‌ها را از هوش مصنوعی دلخواه خود پیست کنید:</label>
++  725         <textarea class="paste-area" id="nutritionPaste" placeholder="پروتئین (گرم): 120&#10;چربی (گرم): 65&#10;کربوهیدرات (گرم): 250&#10;..."></textarea>
++  726       </div>
++  727       <div class="form-row" style="margin-top:12px">
++  728         <button class="btn-primary" onclick="parseAndSaveNutrition()"><i class="fas fa-check"></i> ثبت</button>
++  729         <button class="btn-secondary" onclick="loadNutritionTemplate()"><i class="fas fa-file-lines"></i> الگوی خالی</button>
++  730       </div>
++  731     </div>
++  732 
++  733     <!-- Nutrition alerts -->
++  734     <div id="nutritionAlerts"></div>
++  735 
++  736     <!-- Nutrition Display -->
++  737     <div class="card">
++  738       <div class="card-header">
++  739         <div class="card-title"><i class="fas fa-chart-pie"></i> وضعیت تغذیه</div>
++  740         <div class="date-nav" style="margin-bottom:0">
++  741           <button class="btn-icon" onclick="changeNutritionDate(-1)"><i class="fas fa-chevron-right"></i></button>
++  742           <div class="current-date" id="nutritionDateLabel"></div>
++  743           <button class="btn-icon" onclick="changeNutritionDate(1)"><i class="fas fa-chevron-left"></i></button>
++  744         </div>
++  745       </div>
++  746       <div class="sub-tabs" id="nutritionSubTabs">
++  747         <button class="sub-tab active" onclick="switchNutritionTab('macros')">ماکروها</button>
++  748         <button class="sub-tab" onclick="switchNutritionTab('vitamins')">ویتامین‌ها</button>
++  749         <button class="sub-tab" onclick="switchNutritionTab('minerals')">مواد معدنی</button>
++  750         <button class="sub-tab" onclick="switchNutritionTab('trace')">ریزمغذی‌ها</button>
++  751         <button class="sub-tab" onclick="switchNutritionTab('optional')">مکمل‌ها</button>
++  752       </div>
++  753       <div id="nutritionDisplay"></div>
++  754     </div>
++  755 
++  756     <!-- Macro Chart -->
++  757     <div class="card">
++  758       <div class="card-header">
++  759         <div class="card-title"><i class="fas fa-chart-bar"></i> نمودار ماکروها</div>
++  760       </div>
++  761       <div class="chart-container"><canvas id="macroChart"></canvas></div>
++  762     </div>
++  763   </div>
++  764 
++  765   <!-- ==================== STATS SECTION ==================== -->
++  766   <div id="statsSection" class="section">
++  767     <div class="stats-grid" id="overviewStats"></div>
++  768 
++  769     <div class="sub-tabs" id="statsSubTabs">
++  770       <button class="sub-tab active" onclick="switchStatsTab('study')">درسی</button>
++  771       <button class="sub-tab" onclick="switchStatsTab('exercise')">ورزشی</button>
++  772       <button class="sub-tab" onclick="switchStatsTab('nutrition')">تغذیه</button>
++  773     </div>
++  774 
++  775     <div id="statsContent">
++  776       <div class="card">
++  777         <div class="chart-container"><canvas id="statsChart"></canvas></div>
++  778       </div>
++  779       <div id="statsAlerts"></div>
++  780     </div>
++  781   </div>
++  782 </main>
++  783 
++  784 <!-- Toast -->
++  785 <div class="toast" id="toast"><i class="fas fa-check-circle" style="color:var(--success)"></i> <span id="toastMsg"></span></div>
++  786 
++  787 <script>
++  788 /* ========== GLOBALS & STATE ========== */
++  789 let DB;
++  790 const DB_NAME = 'X135DB';
++  791 const DB_VERSION = 3;
++  792 const STORES = { topics: 'topics', workouts: 'workouts', nutrition: 'nutrition', settings: 'settings', reviewStatus: 'reviewStatus' };
++  793 
++  794 let state = {
++  795   settings: { startDate: '', totalDays: 135, intervals: [1,3,7,15,30,60] },
++  796   topics: [],
++  797   workouts: [],
++  798   nutrition: [],
++  799   reviewStatus: {},
++  800   currentDay: 1,
++  801   workoutViewDate: new Date().toISOString().split('T')[0],
++  802   nutritionViewDate: new Date().toISOString().split('T')[0],
++  803   currentNutritionTab: 'macros',
++  804   currentStatsTab: 'study',
++  805   charts: {}
++  806 };
++  807 
++  808 /* ========== THEME ========== */
++  809 function initTheme() {
++  810   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
++  811     document.documentElement.classList.add('dark');
++  812   }
++  813   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
++  814     if (event.matches) document.documentElement.classList.add('dark');
++  815     else document.documentElement.classList.remove('dark');
++  816   });
++  817   updateThemeIcon();
++  818 }
++  819 function toggleTheme() {
++  820   document.documentElement.classList.toggle('dark');
++  821   updateThemeIcon();
++  822 }
++  823 function updateThemeIcon() {
++  824   const icon = document.querySelector('#themeToggle i');
++  825   if (document.documentElement.classList.contains('dark')) {
++  826     icon.className = 'fas fa-sun';
++  827   } else {
++  828     icon.className = 'fas fa-moon';
++  829   }
++  830 }
++  831 
++  832 /* ========== TOAST ========== */
++  833 function showToast(msg) {
++  834   const t = document.getElementById('toast');
++  835   document.getElementById('toastMsg').textContent = msg;
++  836   t.classList.add('show');
++  837   setTimeout(() => t.classList.remove('show'), 2500);
++  838 }
++  839 
++  840 /* ========== INDEXEDDB ========== */
++  841 function openDB() {
++  842   return new Promise((resolve, reject) => {
++  843     const req = indexedDB.open(DB_NAME, DB_VERSION);
++  844     req.onupgradeneeded = (e) => {
++  845       const db = e.target.result;
++  846       Object.values(STORES).forEach(name => {
++  847         if (!db.objectStoreNames.contains(name)) {
++  848           db.createObjectStore(name, { keyPath: 'id' });
++  849         }
++  850       });
++  851     };
++  852     req.onsuccess = (e) => { DB = e.target.result; resolve(DB); };
++  853     req.onerror = (e) => reject(e.target.error);
++  854   });
++  855 }
++  856 
++  857 function dbPut(store, data) {
++  858   return new Promise((resolve, reject) => {
++  859     const tx = DB.transaction(store, 'readwrite');
++  860     tx.objectStore(store).put(data);
++  861     tx.oncomplete = () => resolve();
++  862     tx.onerror = (e) => reject(e.target.error);
++  863   });
++  864 }
++  865 
++  866 function dbGetAll(store) {
++  867   return new Promise((resolve, reject) => {
++  868     const tx = DB.transaction(store, 'readonly');
++  869     const req = tx.objectStore(store).getAll();
++  870     req.onsuccess = () => resolve(req.result);
++  871     req.onerror = (e) => reject(e.target.error);
++  872   });
++  873 }
++  874 
++  875 function dbDelete(store, id) {
++  876   return new Promise((resolve, reject) => {
++  877     const tx = DB.transaction(store, 'readwrite');
++  878     tx.objectStore(store).delete(id);
++  879     tx.oncomplete = () => resolve();
++  880     tx.onerror = (e) => reject(e.target.error);
++  881   });
++  882 }
++  883 
++  884 function dbClear(store) {
++  885   return new Promise((resolve, reject) => {
++  886     const tx = DB.transaction(store, 'readwrite');
++  887     tx.objectStore(store).clear();
++  888     tx.oncomplete = () => resolve();
++  889     tx.onerror = (e) => reject(e.target.error);
++  890   });
++  891 }
++  892 
++  893 /* ========== LOAD DATA ========== */
++  894 async function loadAll() {
++  895   const [topics, workouts, nutrition, settingsArr, reviewStatusArr] = await Promise.all([
++  896     dbGetAll(STORES.topics),
++  897     dbGetAll(STORES.workouts),
++  898     dbGetAll(STORES.nutrition),
++  899     dbGetAll(STORES.settings),
++  900     dbGetAll(STORES.reviewStatus)
++  901   ]);
++  902   state.topics = topics || [];
++  903   state.workouts = workouts || [];
++  904   state.nutrition = nutrition || [];
++  905   if (settingsArr && settingsArr.length > 0) {
++  906     Object.assign(state.settings, settingsArr[0]);
++  907   }
++  908   state.reviewStatus = {};
++  909   (reviewStatusArr || []).forEach(r => { state.reviewStatus[r.id] = r.done; });
++  910   applySettingsToUI();
++  911   computeCurrentDay();
++  912   renderAll();
++  913 }
++  914 
++  915 function applySettingsToUI() {
++  916   document.getElementById('startDate').value = state.settings.startDate || '';
++  917   document.getElementById('totalDays').value = state.settings.totalDays || 135;
++  918   renderIntervals();
++  919 }
++  920 
++  921 function computeCurrentDay() {
++  922   if (!state.settings.startDate) {
++  923     state.currentDay = 1;
++  924     return;
++  925   }
++  926   const start = new Date(state.settings.startDate);
++  927   const today = new Date();
++  928   start.setHours(0,0,0,0);
++  929   today.setHours(0,0,0,0);
++  930   const diff = Math.floor((today - start) / 86400000) + 1;
++  931   state.currentDay = Math.max(1, Math.min(diff, state.settings.totalDays));
++  932 }
++  933 
++  934 /* ========== SETTINGS ========== */
++  935 async function saveSettings() {
++  936   state.settings.startDate = document.getElementById('startDate').value;
++  937   state.settings.totalDays = parseInt(document.getElementById('totalDays').value) || 135;
++  938   state.settings.id = 'main';
++  939   await dbPut(STORES.settings, state.settings);
++  940   computeCurrentDay();
++  941   renderDaySelector();
++  942   renderDailyReviews();
++  943   showToast('تنظیمات ذخیره شد');
++  944 }
++  945 
++  946 function renderIntervals() {
++  947   const container = document.getElementById('intervalChips');
++  948   container.innerHTML = state.settings.intervals.map((iv, i) =>
++  949     '<span class="interval-chip">+' + iv + ' روز <button class="remove-interval" onclick="removeInterval(' + i + ')"><i class="fas fa-times"></i></button></span>'
++  950   ).join('');
++  951 }
++  952 
++  953 function addInterval() {
++  954   const inp = document.getElementById('newInterval');
++  955   const val = parseInt(inp.value);
++  956   if (!val || val < 1) return;
++  957   if (state.settings.intervals.includes(val)) { showToast('این بازه قبلاً اضافه شده'); return; }
++  958   state.settings.intervals.push(val);
++  959   state.settings.intervals.sort((a,b) => a - b);
++  960   inp.value = '';
++  961   renderIntervals();
++  962   saveSettings();
++  963 }
++  964 
++  965 function removeInterval(idx) {
++  966   state.settings.intervals.splice(idx, 1);
++  967   renderIntervals();
++  968   saveSettings();
++  969 }
++  970 
++  971 /* ========== TAB SWITCHING ========== */
++  972 function switchTab(tab) {
++  973   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
++  974   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
++  975   document.getElementById(tab + 'Section').classList.add('active');
++  976   document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
++  977   if (tab === 'stats') renderStats();
++  978   if (tab === 'exercise') renderWorkoutChart();
++  979   if (tab === 'nutrition') renderMacroChart();
++  980 }
++  981 
++  982 /* ========== STUDY: TOPICS ========== */
++  983 function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
++  984 
++  985 async function addTopic() {
++  986   const name = document.getElementById('topicName').value.trim();
++  987   const hours = parseFloat(document.getElementById('topicHours').value) || 0;
++  988   const day = parseInt(document.getElementById('topicDay').value) || 0;
++  989   if (!name) { showToast('نام مبحث را وارد کنید'); return; }
++  990   if (day < 1) { showToast('شماره روز را وارد کنید'); return; }
++  991   const topic = { id: uid(), name, hours, day, completed: false, priority: state.topics.length };
++  992   state.topics.push(topic);
++  993   await dbPut(STORES.topics, topic);
++  994   document.getElementById('topicName').value = '';
++  995   document.getElementById('topicHours').value = '';
++  996   document.getElementById('topicDay').value = '';
++  997   renderTopics();
++  998   renderDaySelector();
++  999   renderDailyReviews();
++ 1000   showToast('مبحث اضافه شد');
++ 1001 }
++ 1002 
++ 1003 function renderTopics() {
++ 1004   const list = document.getElementById('topicsList');
++ 1005   document.getElementById('topicCount').textContent = toPersian(state.topics.length) + ' مبحث';
++ 1006   if (state.topics.length === 0) {
++ 1007     list.innerHTML = '<div class="empty-state"><i class="fas fa-book"></i><p>هنوز مبحثی اضافه نشده</p></div>';
++ 1008     return;
++ 1009   }
++ 1010   list.innerHTML = state.topics.map(t =>
++ 1011     '<div class="todo-item ' + (t.completed ? 'completed' : '') + '" draggable="true" data-id="' + t.id + '" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropTopic(event)">' +
++ 1012       '<button class="todo-check ' + (t.completed ? 'checked' : '') + '" onclick="toggleTopic(\'' + t.id + '\')">' +
++ 1013         (t.completed ? '<i class="fas fa-check"></i>' : '') +
++ 1014       '</button>' +
++ 1015       '<div style="flex:1">' +
++ 1016         '<div class="todo-text">' + escapeHtml(t.name) + '</div>' +
++ 1017         '<div class="todo-meta">' +
++ 1018           '<span><i class="fas fa-clock"></i> ' + toPersian(t.hours) + ' ساعت</span>' +
++ 1019           '<span><i class="fas fa-calendar"></i> روز ' + toPersian(t.day) + '</span>' +
++ 1020         '</div>' +
++ 1021       '</div>' +
++ 1022       '<div class="todo-actions">' +
++ 1023         '<button class="btn-icon btn-xs" onclick="editTopicModal(\'' + t.id + '\')"><i class="fas fa-pen"></i></button>' +
++ 1024         '<button class="btn-icon btn-xs" onclick="deleteTopic(\'' + t.id + '\')"><i class="fas fa-trash"></i></button>' +
++ 1025       '</div>' +
++ 1026     '</div>'
++ 1027   ).join('');
++ 1028 }
++ 1029 
++ 1030 async function toggleTopic(id) {
++ 1031   const t = state.topics.find(x => x.id === id);
++ 1032   if (t) { t.completed = !t.completed; await dbPut(STORES.topics, t); renderTopics(); }
++ 1033 }
++ 1034 
++ 1035 async function deleteTopic(id) {
++ 1036   showConfirmDialog('آیا از حذف این مبحث مطمئن هستید؟', async () => {
++ 1037     state.topics = state.topics.filter(x => x.id !== id);
++ 1038     await dbDelete(STORES.topics, id);
++ 1039     renderTopics();
++ 1040     renderDaySelector();
++ 1041     renderDailyReviews();
++ 1042     showToast('مبحث حذف شد');
++ 1043   });
++ 1044 }
++ 1045 
++ 1046 function editTopicModal(id) {
++ 1047   const t = state.topics.find(x => x.id === id);
++ 1048   if (!t) return;
++ 1049   showModal('ویرایش مبحث',
++ 1050     '<div class="form-group"><label>نام</label><input type="text" id="editTopicName" value="' + escapeAttr(t.name) + '"></div>' +
++ 1051     '<div class="form-grid" style="margin-top:12px">' +
++ 1052       '<div class="form-group"><label>ساعت</label><input type="number" id="editTopicHours" value="' + t.hours + '" step="0.5"></div>' +
++ 1053       '<div class="form-group"><label>روز</label><input type="number" id="editTopicDay" value="' + t.day + '" min="1"></div>' +
++ 1054     '</div>',
++ 1055     async () => {
++ 1056       t.name = document.getElementById('editTopicName').value.trim() || t.name;
++ 1057       t.hours = parseFloat(document.getElementById('editTopicHours').value) || t.hours;
++ 1058       t.day = parseInt(document.getElementById('editTopicDay').value) || t.day;
++ 1059       await dbPut(STORES.topics, t);
++ 1060       renderTopics();
++ 1061       renderDailyReviews();
++ 1062       showToast('مبحث ویرایش شد');
++ 1063     }
++ 1064   );
++ 1065 }
++ 1066 
++ 1067 /* ========== DRAG & DROP ========== */
++ 1068 let dragId = null;
++ 1069 function dragStart(e) {
++ 1070   dragId = e.currentTarget.dataset.id;
++ 1071   e.currentTarget.classList.add('dragging');
++ 1072   e.dataTransfer.effectAllowed = 'move';
++ 1073 }
++ 1074 function dragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
++ 1075 async function dropTopic(e) {
++ 1076   e.preventDefault();
++ 1077   const targetId = e.currentTarget.dataset.id;
++ 1078   if (!dragId || dragId === targetId) return;
++ 1079   const fromIdx = state.topics.findIndex(x => x.id === dragId);
++ 1080   const toIdx = state.topics.findIndex(x => x.id === targetId);
++ 1081   if (fromIdx < 0 || toIdx < 0) return;
++ 1082   const [item] = state.topics.splice(fromIdx, 1);
++ 1083   state.topics.splice(toIdx, 0, item);
++ 1084   state.topics.forEach((t, i) => { t.priority = i; dbPut(STORES.topics, t); });
++ 1085   dragId = null;
++ 1086   renderTopics();
++ 1087 }
++ 1088 document.addEventListener('dragend', () => {
++ 1089   document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
++ 1090   dragId = null;
++ 1091 });
++ 1092 
++ 1093 /* ========== EBBINGHAUS DAILY COLUMN ========== */
++ 1094 function getReviewsForDay(dayNum) {
++ 1095   const reviews = [];
++ 1096   state.topics.forEach(t => {
++ 1097     if (t.day === dayNum) {
++ 1098       reviews.push({ topicId: t.id, topicName: t.name, type: 'study', day: dayNum });
++ 1099     }
++ 1100     state.settings.intervals.forEach((iv, idx) => {
++ 1101       if (t.day + iv === dayNum) {
++ 1102         const isTest = idx >= Math.floor(state.settings.intervals.length / 2);
++ 1103         reviews.push({ topicId: t.id, topicName: t.name, type: isTest ? 'test' : 'review', day: dayNum, interval: iv });
++ 1104       }
++ 1105     });
++ 1106   });
++ 1107   return reviews;
++ 1108 }
++ 1109 
++ 1110 function reviewKey(topicId, day, type) { return topicId + '_' + day + '_' + type; }
++ 1111 
++ 1112 function renderDaySelector() {
++ 1113   const container = document.getElementById('daySelector');
++ 1114   const total = state.settings.totalDays;
++ 1115   let html = '';
++ 1116   for (let d = 1; d <= total; d++) {
++ 1117     const reviews = getReviewsForDay(d);
++ 1118     const isToday = d === state.currentDay;
++ 1119     const hasRev = reviews.length > 0;
++ 1120     const selected = d === state.currentDay;
++ 1121     let cls = 'day-chip';
++ 1122     if (isToday) cls += ' today';
++ 1123     if (hasRev) cls += ' has-reviews';
++ 1124     if (selected) cls += ' selected';
++ 1125     html += '<button class="' + cls + '" onclick="selectDay(' + d + ')" data-day="' + d + '">' + toPersian(d) + '</button>';
++ 1126   }
++ 1127   container.innerHTML = html;
++ 1128   setTimeout(() => {
++ 1129     const sel = container.querySelector('.selected');
++ 1130     if (sel) sel.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
++ 1131   }, 100);
++ 1132 }
++ 1133 
++ 1134 function selectDay(d) {
++ 1135   state.currentDay = d;
++ 1136   document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('selected'));
++ 1137   const chip = document.querySelector('.day-chip[data-day="' + d + '"]');
++ 1138   if (chip) chip.classList.add('selected');
++ 1139   renderDailyReviews();
++ 1140 }
++ 1141 
++ 1142 function changeDay(delta) {
++ 1143   const nd = state.currentDay + delta;
++ 1144   if (nd >= 1 && nd <= state.settings.totalDays) selectDay(nd);
++ 1145 }
++ 1146 
++ 1147 function renderDailyReviews() {
++ 1148   const container = document.getElementById('dailyReviews');
++ 1149   document.getElementById('currentDayLabel').textContent = 'روز ' + toPersian(state.currentDay);
++ 1150   const reviews = getReviewsForDay(state.currentDay);
++ 1151   if (reviews.length === 0) {
++ 1152     container.innerHTML = '<div class="empty-state"><i class="fas fa-coffee"></i><p>برنامه‌ای برای این روز وجود ندارد</p></div>';
++ 1153     return;
++ 1154   }
++ 1155   container.innerHTML = reviews.map(r => {
++ 1156     const key = reviewKey(r.topicId, r.day, r.type);
++ 1157     const done = state.reviewStatus[key];
++ 1158     const typeLabel = r.type === 'study' ? '📖 مطالعه' : r.type === 'review' ? '🔄 مرور (+' + toPersian(r.interval) + ')' : '📝 آزمون (+' + toPersian(r.interval) + ')';
++ 1159     const cls = 'review-item ' + (r.type === 'test' ? 'test' : 'review') + (done ? ' done' : '');
++ 1160     return '<div class="' + cls + '">' +
++ 1161       '<button class="todo-check ' + (done ? 'checked' : '') + '" onclick="toggleReview(\'' + key + '\')">' +
++ 1162         (done ? '<i class="fas fa-check"></i>' : '') +
++ 1163       '</button>' +
++ 1164       '<div style="flex:1">' +
++ 1165         '<strong>' + escapeHtml(r.topicName) + '</strong>' +
++ 1166         '<div style="font-size:11px;color:var(--text-muted)">' + typeLabel + '</div>' +
++ 1167       '</div>' +
++ 1168     '</div>';
++ 1169   }).join('');
++ 1170 }
++ 1171 
++ 1172 async function toggleReview(key) {
++ 1173   state.reviewStatus[key] = !state.reviewStatus[key];
++ 1174   await dbPut(STORES.reviewStatus, { id: key, done: state.reviewStatus[key] });
++ 1175   renderDailyReviews();
++ 1176 }
++ 1177 
++ 1178 /* ========== EXERCISE ========== */
++ 1179 function initWorkoutDate() {
++ 1180   document.getElementById('workoutDate').value = state.workoutViewDate;
++ 1181   renderWorkoutDateLabel();
++ 1182 }
++ 1183 
++ 1184 function renderWorkoutDateLabel() {
++ 1185   document.getElementById('workoutDateLabel').textContent = formatDatePersian(state.workoutViewDate);
++ 1186 }
++ 1187 
++ 1188 function changeWorkoutDate(delta) {
++ 1189   const d = new Date(state.workoutViewDate);
++ 1190   d.setDate(d.getDate() + delta);
++ 1191   state.workoutViewDate = d.toISOString().split('T')[0];
++ 1192   renderWorkoutDateLabel();
++ 1193   renderWorkouts();
++ 1194   renderWorkoutAlerts();
++ 1195 }
++ 1196 
++ 1197 async function addWorkout() {
++ 1198   const name = document.getElementById('workoutName').value.trim();
++ 1199   const sets = parseInt(document.getElementById('workoutSets').value) || 0;
++ 1200   const reps = parseInt(document.getElementById('workoutReps').value) || 0;
++ 1201   const duration = parseInt(document.getElementById('workoutDuration').value) || 0;
++ 1202   const intensity = parseInt(document.getElementById('workoutIntensity').value) || 3;
++ 1203   const date = document.getElementById('workoutDate').value;
++ 1204   if (!name) { showToast('نام تمرین را وارد کنید'); return; }
++ 1205   const w = { id: uid(), name, sets, reps, duration, intensity: Math.min(5, Math.max(1, intensity)), date, completed: false };
++ 1206   state.workouts.push(w);
++ 1207   await dbPut(STORES.workouts, w);
++ 1208   document.getElementById('workoutName').value = '';
++ 1209   document.getElementById('workoutSets').value = '';
++ 1210   document.getElementById('workoutReps').value = '';
++ 1211   document.getElementById('workoutDuration').value = '';
++ 1212   document.getElementById('workoutIntensity').value = '';
++ 1213   state.workoutViewDate = date;
++ 1214   renderWorkoutDateLabel();
++ 1215   renderWorkouts();
++ 1216   renderWorkoutChart();
++ 1217   renderWorkoutAlerts();
++ 1218   showToast('تمرین ثبت شد');
++ 1219 }
++ 1220 
++ 1221 function renderWorkouts() {
++ 1222   const list = document.getElementById('workoutsList');
++ 1223   const dayWorkouts = state.workouts.filter(w => w.date === state.workoutViewDate);
++ 1224   if (dayWorkouts.length === 0) {
++ 1225     list.innerHTML = '<div class="empty-state"><i class="fas fa-dumbbell"></i><p>تمرینی برای این روز ثبت نشده</p></div>';
++ 1226     return;
++ 1227   }
++ 1228   list.innerHTML = dayWorkouts.map(w => {
++ 1229     const dots = Array.from({length:5}, (_, i) =>
++ 1230       '<span class="intensity-dot ' + (i < w.intensity ? 'filled' : '') + '"></span>'
++ 1231     ).join('');
++ 1232     return '<div class="todo-item ' + (w.completed ? 'completed' : '') + '" draggable="true" data-id="' + w.id + '">' +
++ 1233       '<button class="todo-check ' + (w.completed ? 'checked' : '') + '" onclick="toggleWorkout(\'' + w.id + '\')">' +
++ 1234         (w.completed ? '<i class="fas fa-check"></i>' : '') +
++ 1235       '</button>' +
++ 1236       '<div style="flex:1">' +
++ 1237         '<div class="todo-text">' + escapeHtml(w.name) + '</div>' +
++ 1238         '<div class="todo-meta">' +
++ 1239           (w.sets ? '<span>' + toPersian(w.sets) + ' ست</span>' : '') +
++ 1240           (w.reps ? '<span>' + toPersian(w.reps) + ' تکرار</span>' : '') +
++ 1241           (w.duration ? '<span>' + toPersian(w.duration) + ' دقیقه</span>' : '') +
++ 1242           '<span class="intensity-display">' + dots + '</span>' +
++ 1243         '</div>' +
++ 1244       '</div>' +
++ 1245       '<div class="todo-actions">' +
++ 1246         '<button class="btn-icon btn-xs" onclick="editWorkoutModal(\'' + w.id + '\')"><i class="fas fa-pen"></i></button>' +
++ 1247         '<button class="btn-icon btn-xs" onclick="deleteWorkout(\'' + w.id + '\')"><i class="fas fa-trash"></i></button>' +
++ 1248       '</div>' +
++ 1249     '</div>';
++ 1250   }).join('');
++ 1251 }
++ 1252 
++ 1253 async function toggleWorkout(id) {
++ 1254   const w = state.workouts.find(x => x.id === id);
++ 1255   if (w) { w.completed = !w.completed; await dbPut(STORES.workouts, w); renderWorkouts(); }
++ 1256 }
++ 1257 
++ 1258 async function deleteWorkout(id) {
++ 1259   showConfirmDialog('آیا از حذف این تمرین مطمئن هستید؟', async () => {
++ 1260     state.workouts = state.workouts.filter(x => x.id !== id);
++ 1261     await dbDelete(STORES.workouts, id);
++ 1262     renderWorkouts();
++ 1263     renderWorkoutChart();
++ 1264     showToast('تمرین حذف شد');
++ 1265   });
++ 1266 }
++ 1267 
++ 1268 function editWorkoutModal(id) {
++ 1269   const w = state.workouts.find(x => x.id === id);
++ 1270   if (!w) return;
++ 1271   showModal('ویرایش تمرین',
++ 1272     '<div class="form-grid">' +
++ 1273       '<div class="form-group"><label>نام</label><input type="text" id="ew_name" value="' + escapeAttr(w.name) + '"></div>' +
++ 1274       '<div class="form-group"><label>ست</label><input type="number" id="ew_sets" value="' + w.sets + '"></div>' +
++ 1275       '<div class="form-group"><label>تکرار</label><input type="number" id="ew_reps" value="' + w.reps + '"></div>' +
++ 1276       '<div class="form-group"><label>زمان</label><input type="number" id="ew_dur" value="' + w.duration + '"></div>' +
++ 1277       '<div class="form-group"><label>شدت</label><input type="number" id="ew_int" value="' + w.intensity + '" min="1" max="5"></div>' +
++ 1278     '</div>',
++ 1279     async () => {
++ 1280       w.name = document.getElementById('ew_name').value.trim() || w.name;
++ 1281       w.sets = parseInt(document.getElementById('ew_sets').value) || w.sets;
++ 1282       w.reps = parseInt(document.getElementById('ew_reps').value) || w.reps;
++ 1283       w.duration = parseInt(document.getElementById('ew_dur').value) || w.duration;
++ 1284       w.intensity = parseInt(document.getElementById('ew_int').value) || w.intensity;
++ 1285       await dbPut(STORES.workouts, w);
++ 1286       renderWorkouts();
++ 1287       renderWorkoutChart();
++ 1288       showToast('تمرین ویرایش شد');
++ 1289     }
++ 1290   );
++ 1291 }
++ 1292 
++ 1293 function renderWorkoutAlerts() {
++ 1294   const container = document.getElementById('workoutAlerts');
++ 1295   const dayW = state.workouts.filter(w => w.date === state.workoutViewDate);
++ 1296   const totalMins = dayW.reduce((s,w) => s + (w.duration || 0), 0);
++ 1297   const alerts = [];
++ 1298   if (dayW.length === 0) {
++ 1299     alerts.push({ type: 'warning', msg: 'امروز هنوز تمرینی ثبت نشده' });
++ 1300   } else if (totalMins > 120) {
++ 1301     alerts.push({ type: 'danger', msg: 'تمرین بیش از ۱۲۰ دقیقه — مراقب آسیب‌دیدگی باشید!' });
++ 1302   } else if (totalMins >= 30 && totalMins <= 90) {
++ 1303     alerts.push({ type: 'success', msg: 'حجم تمرین مناسب است (' + toPersian(totalMins) + ' دقیقه)' });
++ 1304   }
++ 1305   const avgIntensity = dayW.length > 0 ? dayW.reduce((s,w) => s + w.intensity, 0) / dayW.length : 0;
++ 1306   if (avgIntensity > 4) alerts.push({ type: 'warning', msg: 'شدت تمرینات بالاست — استراحت کافی داشته باشید' });
++ 1307   container.innerHTML = alerts.map(a =>
++ 1308     '<div class="alert-bar alert-' + a.type + '"><i class="fas fa-' + (a.type === 'success' ? 'check-circle' : a.type === 'warning' ? 'exclamation-triangle' : 'times-circle') + '"></i> ' + a.msg + '</div>'
++ 1309   ).join('');
++ 1310 }
++ 1311 
++ 1312 function renderWorkoutChart() {
++ 1313   const ctx = document.getElementById('workoutChart');
++ 1314   if (state.charts.workout) state.charts.workout.destroy();
++ 1315   const labels = [];
++ 1316   const durationData = [];
++ 1317   const setsData = [];
++ 1318   for (let i = 6; i >= 0; i--) {
++ 1319     const d = new Date();
++ 1320     d.setDate(d.getDate() - i);
++ 1321     const ds = d.toISOString().split('T')[0];
++ 1322     labels.push(getPersianWeekday(d));
++ 1323     const dayW = state.workouts.filter(w => w.date === ds);
++ 1324     durationData.push(dayW.reduce((s,w) => s + (w.duration || 0), 0));
++ 1325     setsData.push(dayW.reduce((s,w) => s + (w.sets || 0), 0));
++ 1326   }
++ 1327   const isDark = document.documentElement.classList.contains('dark');
++ 1328   state.charts.workout = new Chart(ctx, {
++ 1329     type: 'bar',
++ 1330     data: {
++ 1331       labels,
++ 1332       datasets: [
++ 1333         { label: 'زمان (دقیقه)', data: durationData, backgroundColor: isDark ? 'rgba(20,184,166,0.6)' : 'rgba(13,148,136,0.6)', borderRadius: 6 },
++ 1334         { label: 'ست‌ها', data: setsData, backgroundColor: isDark ? 'rgba(240,201,64,0.6)' : 'rgba(212,160,23,0.6)', borderRadius: 6 }
++ 1335       ]
++ 1336     },
++ 1337     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { family: 'Vazirmatn' }, color: isDark ? '#a8a8c0' : '#4a4a6a' } } }, scales: { x: { ticks: { font: { family: 'Vazirmatn' }, color: isDark ? '#6868888' : '#8888a8' } }, y: { ticks: { font: { family: 'Vazirmatn' }, color: isDark ? '#6868888' : '#8888a8' } } } }
++ 1338   });
++ 1339 }
++ 1340 
++ 1341 /* ========== NUTRITION ========== */
++ 1342 const NUTRIENT_DEFS = {
++ 1343   macros: [
++ 1344     { key: 'protein', label: 'پروتئین', unit: 'گرم', rda: 56, aliases: ['پروتئین','protein'] },
++ 1345     { key: 'fat', label: 'چربی', unit: 'گرم', rda: 70, aliases: ['چربی','fat'] },
++ 1346     { key: 'carb', label: 'کربوهیدرات', unit: 'گرم', rda: 300, aliases: ['کربوهیدرات','carbohydrate','carb'] },
++ 1347     { key: 'fiber', label: 'فیبر', unit: 'گرم', rda: 30, aliases: ['فیبر','fiber'] },
++ 1348     { key: 'sugar', label: 'قندها', unit: 'گرم', rda: 50, aliases: ['قند','sugar','قندها'] },
++ 1349     { key: 'sat_fat', label: 'چربی اشباع', unit: 'گرم', rda: 20, aliases: ['چربی اشباع','saturated fat','چربی‌های اشباع'] },
++ 1350     { key: 'mono_fat', label: 'چربی تک‌اشباع', unit: 'گرم', rda: 25, aliases: ['تک‌اشباع','monounsaturated','چربی‌های تک‌اشباع'] },
++ 1351     { key: 'poly_fat', label: 'چربی چنداشباع', unit: 'گرم', rda: 20, aliases: ['چنداشباع','polyunsaturated','چربی‌های چنداشباع'] },
++ 1352     { key: 'cholesterol', label: 'کلسترول', unit: 'mg', rda: 300, aliases: ['کلسترول','cholesterol'] },
++ 1353     { key: 'calories', label: 'کالری', unit: 'kcal', rda: 2500, aliases: ['کالری','calorie','calories','انرژی','energy'] }
++ 1354   ],
++ 1355   vitamins: [
++ 1356     { key: 'vit_a', label: 'ویتامین A', unit: 'µg', rda: 900, aliases: ['ویتامین a','vitamin a','vit a'] },
++ 1357     { key: 'vit_b1', label: 'ویتامین B1', unit: 'mg', rda: 1.2, aliases: ['ویتامین b1','vitamin b1','تیامین','thiamin','thiamine'] },
++ 1358     { key: 'vit_b2', label: 'ویتامین B2', unit: 'mg', rda: 1.3, aliases: ['ویتامین b2','vitamin b2','ریبوفلاوین','riboflavin'] },
++ 1359     { key: 'vit_b3', label: 'ویتامین B3', unit: 'mg', rda: 16, aliases: ['ویتامین b3','vitamin b3','نیاسین','niacin'] },
++ 1360     { key: 'vit_b5', label: 'ویتامین B5', unit: 'mg', rda: 5, aliases: ['ویتامین b5','vitamin b5','پانتوتنیک','pantothenic'] },
++ 1361     { key: 'vit_b6', label: 'ویتامین B6', unit: 'mg', rda: 1.7, aliases: ['ویتامین b6','vitamin b6'] },
++ 1362     { key: 'vit_b7', label: 'ویتامین B7', unit: 'µg', rda: 30, aliases: ['ویتامین b7','vitamin b7','بیوتین','biotin'] },
++ 1363     { key: 'vit_b9', label: 'ویتامین B9', unit: 'µg', rda: 400, aliases: ['ویتامین b9','vitamin b9','فولات','folate','folic'] },
++ 1364     { key: 'vit_b12', label: 'ویتامین B12', unit: 'mg', rda: 0.0024, aliases: ['ویتامین b12','vitamin b12'] },
++ 1365     { key: 'vit_c', label: 'ویتامین C', unit: 'mg', rda: 90, aliases: ['ویتامین c','vitamin c'] },
++ 1366     { key: 'vit_d', label: 'ویتامین D', unit: 'µg', rda: 20, aliases: ['ویتامین d','vitamin d'] },
++ 1367     { key: 'vit_e', label: 'ویتامین E', unit: 'mg', rda: 15, aliases: ['ویتامین e','vitamin e'] },
++ 1368     { key: 'vit_k', label: 'ویتامین K', unit: 'mg', rda: 0.12, aliases: ['ویتامین k','vitamin k'] }
++ 1369   ],
++ 1370   minerals: [
++ 1371     { key: 'calcium', label: 'کلسیم', unit: 'mg', rda: 1000, aliases: ['کلسیم','calcium'] },
++ 1372     { key: 'iron', label: 'آهن', unit: 'mg', rda: 18, aliases: ['آهن','iron'] },
++ 1373     { key: 'magnesium', label: 'منیزیم', unit: 'mg', rda: 400, aliases: ['منیزیم','magnesium'] },
++ 1374     { key: 'phosphorus', label: 'فسفر', unit: 'mg', rda: 700, aliases: ['فسفر','phosphorus'] },
++ 1375     { key: 'potassium', label: 'پتاسیم', unit: 'mg', rda: 2600, aliases: ['پتاسیم','potassium'] },
++ 1376     { key: 'sodium', label: 'سدیم', unit: 'mg', rda: 2300, aliases: ['سدیم','sodium'] },
++ 1377     { key: 'zinc', label: 'روی', unit: 'mg', rda: 11, aliases: ['روی','zinc'] },
++ 1378     { key: 'copper', label: 'مس', unit: 'mg', rda: 0.9, aliases: ['مس','copper'] },
++ 1379     { key: 'manganese', label: 'منگنز', unit: 'mg', rda: 2.3, aliases: ['منگنز','manganese'] },
++ 1380     { key: 'selenium', label: 'سلنیوم', unit: 'µg', rda: 55, aliases: ['سلنیوم','selenium'] },
++ 1381     { key: 'iodine', label: 'ید', unit: 'µg', rda: 150, aliases: ['ید','iodine'] },
++ 1382     { key: 'chromium', label: 'کروم', unit: 'µg', rda: 35, aliases: ['کروم','chromium'] },
++ 1383     { key: 'molybdenum', label: 'مولیبدن', unit: 'µg', rda: 45, aliases: ['مولیبدن','molybdenum'] }
++ 1384   ],
++ 1385   trace: [
++ 1386     { key: 'fluoride', label: 'فلوراید', unit: 'mg', rda: 4, aliases: ['فلوراید','fluoride'] },
++ 1387     { key: 'boron', label: 'بور', unit: 'mg', rda: 3, aliases: ['بور','boron'] },
++ 1388     { key: 'nickel', label: 'نیکل', unit: 'µg', rda: 200, aliases: ['نیکل','nickel'] },
++ 1389     { key: 'silicon', label: 'سیلیکون', unit: 'mg', rda: 25, aliases: ['سیلیکون','silicon'] },
++ 1390     { key: 'vanadium', label: 'وانادیوم', unit: 'µg', rda: 20, aliases: ['وانادیوم','vanadium'] },
++ 1391     { key: 'cobalt', label: 'کبالت', unit: 'µg', rda: 8, aliases: ['کبالت','cobalt'] }
++ 1392   ],
++ 1393   optional: [
++ 1394     { key: 'omega3', label: 'امگا-۳', unit: 'گرم', rda: 1.6, aliases: ['امگا-3','امگا-۳','omega-3','omega 3'] },
++ 1395     { key: 'omega6', label: 'امگا-۶', unit: 'گرم', rda: 17, aliases: ['امگا-6','امگا-۶','omega-6','omega 6'] },
++ 1396     { key: 'water', label: 'آب', unit: 'ml', rda: 3700, aliases: ['آب','water'] }
++ 1397   ]
++ 1398 };
++ 1399 
++ 1400 const ALL_NUTRIENTS = [].concat(NUTRIENT_DEFS.macros, NUTRIENT_DEFS.vitamins, NUTRIENT_DEFS.minerals, NUTRIENT_DEFS.trace, NUTRIENT_DEFS.optional);
++ 1401 
++ 1402 function initNutritionDate() {
++ 1403   document.getElementById('nutritionDate').value = state.nutritionViewDate;
++ 1404   renderNutritionDateLabel();
++ 1405 }
++ 1406 
++ 1407 function renderNutritionDateLabel() {
++ 1408   document.getElementById('nutritionDateLabel').textContent = formatDatePersian(state.nutritionViewDate);
++ 1409 }
++ 1410 
++ 1411 function changeNutritionDate(delta) {
++ 1412   const d = new Date(state.nutritionViewDate);
++ 1413   d.setDate(d.getDate() + delta);
++ 1414   state.nutritionViewDate = d.toISOString().split('T')[0];
++ 1415   renderNutritionDateLabel();
++ 1416   renderNutritionDisplay();
++ 1417   renderNutritionAlerts();
++ 1418   renderMacroChart();
++ 1419 }
++ 1420 
++ 1421 function loadNutritionTemplate() {
++ 1422   const lines = ALL_NUTRIENTS.map(n => n.label + ' (' + n.unit + '): ').join('\n');
++ 1423   document.getElementById('nutritionPaste').value = lines;
++ 1424 }
++ 1425 
++ 1426 function parseNutritionText(text) {
++ 1427   const data = {};
++ 1428   const lines = text.split('\n');
++ 1429   lines.forEach(line => {
++ 1430     const cleaned = line.replace(/[-–—•*]/g, '').trim();
++ 1431     if (!cleaned) return;
++ 1432     let matched = false;
++ 1433     ALL_NUTRIENTS.forEach(ndef => {
++ 1434       if (matched) return;
++ 1435       ndef.aliases.forEach(alias => {
++ 1436         if (matched) return;
++ 1437         if (cleaned.toLowerCase().includes(alias.toLowerCase())) {
++ 1438           const numMatch = cleaned.match(/[:\s]+([\d.,]+)/);
++ 1439           if (numMatch) {
++ 1440             const val = parseFloat(numMatch[1].replace(',', '.'));
++ 1441             if (!isNaN(val)) { data[ndef.key] = val; matched = true; }
++ 1442           }
++ 1443         }
++ 1444       });
++ 1445     });
++ 1446   });
++ 1447   return data;
++ 1448 }
++ 1449 
++ 1450 async function parseAndSaveNutrition() {
++ 1451   const text = document.getElementById('nutritionPaste').value.trim();
++ 1452   const date = document.getElementById('nutritionDate').value;
++ 1453   if (!text) { showToast('متنی وارد نشده'); return; }
++ 1454   if (!date) { showToast('تاریخ را انتخاب کنید'); return; }
++ 1455   const data = parseNutritionText(text);
++ 1456   if (Object.keys(data).length === 0) { showToast('داده‌ای شناسایی نشد — الگو را بررسی کنید'); return; }
++ 1457   const existing = state.nutrition.find(n => n.date === date);
++ 1458   const entry = existing ? { ...existing, data: { ...(existing.data || {}), ...data } } : { id: date, date, data };
++ 1459   if (existing) {
++ 1460     const idx = state.nutrition.findIndex(n => n.date === date);
++ 1461     state.nutrition[idx] = entry;
++ 1462   } else {
++ 1463     state.nutrition.push(entry);
++ 1464   }
++ 1465   await dbPut(STORES.nutrition, entry);
++ 1466   document.getElementById('nutritionPaste').value = '';
++ 1467   state.nutritionViewDate = date;
++ 1468   renderNutritionDateLabel();
++ 1469   renderNutritionDisplay();
++ 1470   renderNutritionAlerts();
++ 1471   renderMacroChart();
++ 1472   showToast(toPersian(Object.keys(data).length) + ' مورد ثبت شد');
++ 1473 }
++ 1474 
++ 1475 function switchNutritionTab(tab) {
++ 1476   state.currentNutritionTab = tab;
++ 1477   document.querySelectorAll('#nutritionSubTabs .sub-tab').forEach(b => b.classList.remove('active'));
++ 1478   document.querySelector('#nutritionSubTabs .sub-tab[onclick*="' + tab + '"]').classList.add('active');
++ 1479   renderNutritionDisplay();
++ 1480 }
++ 1481 
++ 1482 function renderNutritionDisplay() {
++ 1483   const container = document.getElementById('nutritionDisplay');
++ 1484   const entry = state.nutrition.find(n => n.date === state.nutritionViewDate);
++ 1485   const nutrients = NUTRIENT_DEFS[state.currentNutritionTab];
++ 1486   if (!nutrients) return;
++ 1487   if (!entry || !entry.data) {
++ 1488     container.innerHTML = '<div class="empty-state"><i class="fas fa-utensils"></i><p>داده‌ای برای این روز ثبت نشده</p></div>';
++ 1489     return;
++ 1490   }
++ 1491   container.innerHTML = nutrients.map(n => {
++ 1492     const val = entry.data[n.key] || 0;
++ 1493     const pct = Math.min(150, (val / n.rda) * 100);
++ 1494     let color = 'var(--accent)';
++ 1495     let statusTag = '';
++ 1496     if (pct < 50) { color = 'var(--danger)'; statusTag = '<span class="tag tag-danger">کمبود</span>'; }
++ 1497     else if (pct >= 50 && pct < 80) { color = 'var(--warning)'; statusTag = '<span class="tag tag-warning">کم</span>'; }
++ 1498     else if (pct >= 80 && pct <= 120) { color = 'var(--success)'; statusTag = '<span class="tag tag-success">مناسب</span>'; }
++ 1499     else if (pct > 120) { color = 'var(--danger)'; statusTag = '<span class="tag tag-danger">زیاد</span>'; }
++ 1500     return '<div class="nutrient-bar">' +
++ 1501       '<span class="nutrient-name">' + n.label + '</span>' +
++ 1502       '<div class="nutrient-track"><div class="nutrient-fill" style="width:' + Math.min(100, pct) + '%;background:' + color + '"></div></div>' +
++ 1503       '<span class="nutrient-value">' + toPersian(round2(val)) + ' / ' + toPersian(n.rda) + ' ' + n.unit + '</span>' +
++ 1504       statusTag +
++ 1505       '<button class="btn-icon btn-xs" onclick="editNutrient(\'' + n.key + '\',\'' + escapeAttr(n.label) + '\',\'' + n.unit + '\')"><i class="fas fa-pen"></i></button>' +
++ 1506     '</div>';
++ 1507   }).join('');
++ 1508 }
++ 1509 
++ 1510 function editNutrient(key, label, unit) {
++ 1511   const entry = state.nutrition.find(n => n.date === state.nutritionViewDate);
++ 1512   const current = entry && entry.data ? (entry.data[key] || 0) : 0;
++ 1513   showModal('ویرایش ' + label,
++ 1514     '<div class="form-group"><label>' + label + ' (' + unit + ')</label><input type="number" id="editNutrientVal" value="' + current + '" step="0.01"></div>',
++ 1515     async () => {
++ 1516       const val = parseFloat(document.getElementById('editNutrientVal').value) || 0;
++ 1517       let existing = state.nutrition.find(n => n.date === state.nutritionViewDate);
++ 1518       if (!existing) {
++ 1519         existing = { id: state.nutritionViewDate, date: state.nutritionViewDate, data: {} };
++ 1520         state.nutrition.push(existing);
++ 1521       }
++ 1522       existing.data[key] = val;
++ 1523       await dbPut(STORES.nutrition, existing);
++ 1524       renderNutritionDisplay();
++ 1525       renderNutritionAlerts();
++ 1526       showToast(label + ' ویرایش شد');
++ 1527     }
++ 1528   );
++ 1529 }
++ 1530 
++ 1531 function renderNutritionAlerts() {
++ 1532   const container = document.getElementById('nutritionAlerts');
++ 1533   const entry = state.nutrition.find(n => n.date === state.nutritionViewDate);
++ 1534   if (!entry || !entry.data) { container.innerHTML = ''; return; }
++ 1535   const alerts = [];
++ 1536   ALL_NUTRIENTS.forEach(n => {
++ 1537     const val = entry.data[n.key];
++ 1538     if (val === undefined) return;
++ 1539     const pct = (val / n.rda) * 100;
++ 1540     if (pct < 50) alerts.push({ type: 'danger', msg: 'کمبود شدید ' + n.label + ' (' + toPersian(Math.round(pct)) + '% RDA)' });
++ 1541     else if (pct > 150) alerts.push({ type: 'danger', msg: 'مصرف بیش از حد ' + n.label + ' (' + toPersian(Math.round(pct)) + '% RDA)' });
++ 1542   });
++ 1543   if (alerts.length === 0 && Object.keys(entry.data).length > 0) {
++ 1544     alerts.push({ type: 'success', msg: 'وضعیت تغذیه‌ای مناسب است' });
++ 1545   }
++ 1546   container.innerHTML = alerts.slice(0, 5).map(a =>
++ 1547     '<div class="alert-bar alert-' + a.type + '"><i class="fas fa-' + (a.type === 'success' ? 'check-circle' : 'exclamation-triangle') + '"></i> ' + a.msg + '</div>'
++ 1548   ).join('');
++ 1549 }
++ 1550 
++ 1551 function renderMacroChart() {
++ 1552   const ctx = document.getElementById('macroChart');
++ 1553   if (state.charts.macro) state.charts.macro.destroy();
++ 1554   const labels = [];
++ 1555   const proteinData = [];
++ 1556   const fatData = [];
++ 1557   const carbData = [];
++ 1558   for (let i = 6; i >= 0; i--) {
++ 1559     const d = new Date();
++ 1560     d.setDate(d.getDate() - i);
++ 1561     const ds = d.toISOString().split('T')[0];
++ 1562     labels.push(getPersianWeekday(d));
++ 1563     const entry = state.nutrition.find(n => n.date === ds);
++ 1564     proteinData.push(entry && entry.data ? (entry.data.protein || 0) : 0);
++ 1565     fatData.push(entry && entry.data ? (entry.data.fat || 0) : 0);
++ 1566     carbData.push(entry && entry.data ? (entry.data.carb || 0) : 0);
++ 1567   }
++ 1568   const isDark = document.documentElement.classList.contains('dark');
++ 1569   state.charts.macro = new Chart(ctx, {
++ 1570     type: 'line',
++ 1571     data: {
++ 1572       labels,
++ 1573       datasets: [
++ 1574         { label: 'پروتئین (g)', data: proteinData, borderColor: '#e74c3c', backgroundColor: 'rgba(231,76,60,0.1)', fill: true, tension: 0.4 },
++ 1575         { label: 'چربی (g)', data: fatData, borderColor: '#f39c12', backgroundColor: 'rgba(243,156,18,0.1)', fill: true, tension: 0.4 },
++ 1576         { label: 'کربوهیدرات (g)', data: carbData, borderColor: '#3498db', backgroundColor: 'rgba(52,152,219,0.1)', fill: true, tension: 0.4 }
++ 1577       ]
++ 1578     },
++ 1579     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { family: 'Vazirmatn' }, color: isDark ? '#a8a8c0' : '#4a4a6a' } } }, scales: { x: { ticks: { font: { family: 'Vazirmatn' }, color: isDark ? '#6868888' : '#8888a8' } }, y: { ticks: { font: { family: 'Vazirmatn' }, color: isDark ? '#6868888' : '#8888a8' } } } }
++ 1580   });
++ 1581 }
++ 1582 
++ 1583 /* ========== STATS ========== */
++ 1584 function switchStatsTab(tab) {
++ 1585   state.currentStatsTab = tab;
++ 1586   document.querySelectorAll('#statsSubTabs .sub-tab').forEach(b => b.classList.remove('active'));
++ 1587   document.querySelector('#statsSubTabs .sub-tab[onclick*="' + tab + '"]').classList.add('active');
++ 1588   renderStats();
++ 1589 }
++ 1590 
++ 1591 function renderStats() {
++ 1592   renderOverviewStats();
++ 1593   renderStatsChart();
++ 1594   renderStatsAlerts();
++ 1595 }
++ 1596 
++ 1597 function renderOverviewStats() {
++ 1598   const container = document.getElementById('overviewStats');
++ 1599   const totalTopics = state.topics.length;
++ 1600   const completedTopics = state.topics.filter(t => t.completed).length;
++ 1601   const totalHours = state.topics.reduce((s,t) => s + (t.hours || 0), 0);
++ 1602   const totalWorkouts = state.workouts.length;
++ 1603   const completedWorkouts = state.workouts.filter(w => w.completed).length;
++ 1604   const totalReviewsDone = Object.values(state.reviewStatus).filter(Boolean).length;
++ 1605   container.innerHTML = [
++ 1606     { val: toPersian(totalTopics), label: 'مبحث', icon: 'book' },
++ 1607     { val: toPersian(completedTopics), label: 'مطالعه‌شده', icon: 'check' },
++ 1608     { val: toPersian(round2(totalHours)), label: 'ساعت مطالعه', icon: 'clock' },
++ 1609     { val: toPersian(totalReviewsDone), label: 'مرور انجام‌شده', icon: 'rotate' },
++ 1610     { val: toPersian(totalWorkouts), label: 'تمرین', icon: 'dumbbell' },
++ 1611     { val: toPersian(completedWorkouts), label: 'تمرین انجام‌شده', icon: 'check-double' },
++ 1612     { val: toPersian(state.nutrition.length), label: 'روز ثبت تغذیه', icon: 'utensils' },
++ 1613     { val: toPersian(state.currentDay), label: 'روز جاری', icon: 'calendar' }
++ 1614   ].map(s =>
++ 1615     '<div class="stat-card"><div class="stat-value"><i class="fas fa-' + s.icon + '" style="font-size:18px;margin-left:6px"></i>' + s.val + '</div><div class="stat-label">' + s.label + '</div></div>'
++ 1616   ).join('');
++ 1617 }
++ 1618 
++ 1619 function renderStatsChart() {
++ 1620   const ctx = document.getElementById('statsChart');
++ 1621   if (state.charts.stats) state.charts.stats.destroy();
++ 1622   const isDark = document.documentElement.classList.contains('dark');
++ 1623   const labels = [];
++ 1624   for (let i = 13; i >= 0; i--) {
++ 1625     const d = new Date();
++ 1626     d.setDate(d.getDate() - i);
++ 1627     labels.push((d.getMonth()+1) + '/' + d.getDate());
++ 1628   }
++ 1629 
++ 1630   let datasets = [];
++ 1631   if (state.currentStatsTab === 'study') {
++ 1632     const reviewData = [];
++ 1633     const testData = [];
++ 1634     for (let i = 13; i >= 0; i--) {
++ 1635       const d = new Date();
++ 1636       d.setDate(d.getDate() - i);
++ 1637       const dayNum = getDayNum(d);
++ 1638       if (dayNum < 1 || dayNum > state.settings.totalDays) { reviewData.push(0); testData.push(0); continue; }
++ 1639       const reviews = getReviewsForDay(dayNum);
++ 1640       const doneReviews = reviews.filter(r => r.type === 'review' && state.reviewStatus[reviewKey(r.topicId, r.day, r.type)]).length;
++ 1641       const doneTests = reviews.filter(r => r.type === 'test' && state.reviewStatus[reviewKey(r.topicId, r.day, r.type)]).length;
++ 1642       reviewData.push(doneReviews);
++ 1643       testData.push(doneTests);
++ 1644     }
++ 1645     datasets = [
++ 1646       { label: 'مرور انجام‌شده', data: reviewData, backgroundColor: 'rgba(52,152,219,0.6)', borderRadius: 4 },
++ 1647       { label: 'آزمون انجام‌شده', data: testData, backgroundColor: 'rgba(243,156,18,0.6)', borderRadius: 4 }
++ 1648     ];
++ 1649   } else if (state.currentStatsTab === 'exercise') {
++ 1650     const durData = [];
++ 1651     const intData = [];
++ 1652     for (let i = 13; i >= 0; i--) {
++ 1653       const d = new Date();
++ 1654       d.setDate(d.getDate() - i);
++ 1655       const ds = d.toISOString().split('T')[0];
++ 1656       const dayW = state.workouts.filter(w => w.date === ds);
++ 1657       durData.push(dayW.reduce((s,w) => s + (w.duration||0), 0));
++ 1658       intData.push(dayW.length > 0 ? Math.round(dayW.reduce((s,w) => s + w.intensity, 0) / dayW.length * 10) / 10 : 0);
++ 1659     }
++ 1660     datasets = [
++ 1661       { label: 'زمان (دقیقه)', data: durData, backgroundColor: 'rgba(20,184,166,0.6)', borderRadius: 4 },
++ 1662       { label: 'شدت (میانگین)', data: intData, backgroundColor: 'rgba(212,160,23,0.6)', borderRadius: 4 }
++ 1663     ];
++ 1664   } else {
++ 1665     const calData = [];
++ 1666     const protData = [];
++ 1667     for (let i = 13; i >= 0; i--) {
++ 1668       const d = new Date();
++ 1669       d.setDate(d.getDate() - i);
++ 1670       const ds = d.toISOString().split('T')[0];
++ 1671       const entry = state.nutrition.find(n => n.date === ds);
++ 1672       calData.push(entry && entry.data ? (entry.data.calories || 0) : 0);
++ 1673       protData.push(entry && entry.data ? (entry.data.protein || 0) : 0);
++ 1674     }
++ 1675     datasets = [
++ 1676       { label: 'کالری (kcal)', data: calData, borderColor: '#e74c3c', backgroundColor: 'rgba(231,76,60,0.1)', fill: true, tension: 0.4 },
++ 1677       { label: 'پروتئین (g)', data: protData, borderColor: '#3498db', backgroundColor: 'rgba(52,152,219,0.1)', fill: true, tension: 0.4 }
++ 1678     ];
++ 1679   }
++ 1680 
++ 1681   const chartType = state.currentStatsTab === 'nutrition' ? 'line' : 'bar';
++ 1682   state.charts.stats = new Chart(ctx, {
++ 1683     type: chartType,
++ 1684     data: { labels, datasets },
++ 1685     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { family: 'Vazirmatn' }, color: isDark ? '#a8a8c0' : '#4a4a6a' } } }, scales: { x: { ticks: { font: { family: 'Vazirmatn', size: 10 }, color: isDark ? '#6868888' : '#8888a8' } }, y: { ticks: { font: { family: 'Vazirmatn' }, color: isDark ? '#6868888' : '#8888a8' } } } }
++ 1686   });
++ 1687 }
++ 1688 
++ 1689 function renderStatsAlerts() {
++ 1690   const container = document.getElementById('statsAlerts');
++ 1691   const alerts = [];
++ 1692   if (state.currentStatsTab === 'study') {
++ 1693     const total = state.topics.length;
++ 1694     const done = state.topics.filter(t => t.completed).length;
++ 1695     if (total > 0) {
++ 1696       const pct = Math.round((done / total) * 100);
++ 1697       if (pct < 30) alerts.push({ type: 'warning', msg: 'تنها ' + toPersian(pct) + '% مباحث مطالعه شده — تلاش بیشتری لازم است!' });
++ 1698       else if (pct >= 80) alerts.push({ type: 'success', msg: 'عالی! ' + toPersian(pct) + '% مباحث مطالعه شده' });
++ 1699     }
++ 1700     const todayReviews = getReviewsForDay(state.currentDay);
++ 1701     const pendingReviews = todayReviews.filter(r => !state.reviewStatus[reviewKey(r.topicId, r.day, r.type)]);
++ 1702     if (pendingReviews.length > 0) alerts.push({ type: 'info', msg: toPersian(pendingReviews.length) + ' مرور/آزمون برای امروز باقی‌مانده' });
++ 1703   } else if (state.currentStatsTab === 'exercise') {
++ 1704     const thisWeek = [];
++ 1705     for (let i = 0; i < 7; i++) {
++ 1706       const d = new Date(); d.setDate(d.getDate() - i);
++ 1707       const ds = d.toISOString().split('T')[0];
++ 1708       thisWeek.push(...state.workouts.filter(w => w.date === ds));
++ 1709     }
++ 1710     const weekMins = thisWeek.reduce((s,w) => s + (w.duration||0), 0);
++ 1711     if (weekMins < 150) alerts.push({ type: 'warning', msg: 'تمرین هفتگی کمتر از ۱۵۰ دقیقه است' });
++ 1712     else alerts.push({ type: 'success', msg: 'تمرین هفتگی مناسب: ' + toPersian(weekMins) + ' دقیقه' });
++ 1713   } else {
++ 1714     const recent = [];
++ 1715     for (let i = 0; i < 7; i++) {
++ 1716       const d = new Date(); d.setDate(d.getDate() - i);
++ 1717       const ds = d.toISOString().split('T')[0];
++ 1718       const e = state.nutrition.find(n => n.date === ds);
++ 1719       if (e) recent.push(e);
++ 1720     }
++ 1721     if (recent.length === 0) alerts.push({ type: 'warning', msg: 'هیچ داده تغذیه‌ای در هفته اخیر ثبت نشده' });
++ 1722     else {
++ 1723       const avgProt = recent.reduce((s,e) => s + (e.data.protein||0), 0) / recent.length;
++ 1724       if (avgProt < 40) alerts.push({ type: 'danger', msg: 'میانگین پروتئین هفتگی بسیار پایین: ' + toPersian(Math.round(avgProt)) + 'g' });
++ 1725       else if (avgProt >= 50) alerts.push({ type: 'success', msg: 'میانگین پروتئین هفتگی مناسب: ' + toPersian(Math.round(avgProt)) + 'g' });
++ 1726     }
++ 1727   }
++ 1728   container.innerHTML = alerts.map(a =>
++ 1729     '<div class="alert-bar alert-' + a.type + '"><i class="fas fa-' + (a.type === 'success' ? 'check-circle' : a.type === 'info' ? 'info-circle' : 'exclamation-triangle') + '"></i> ' + a.msg + '</div>'
++ 1730   ).join('');
++ 1731 }
++ 1732 
++ 1733 function getDayNum(date) {
++ 1734   if (!state.settings.startDate) return -1;
++ 1735   const start = new Date(state.settings.startDate);
++ 1736   start.setHours(0,0,0,0);
++ 1737   const d = new Date(date);
++ 1738   d.setHours(0,0,0,0);
++ 1739   return Math.floor((d - start) / 86400000) + 1;
++ 1740 }
++ 1741 
++ 1742 /* ========== IMPORT / EXPORT ========== */
++ 1743 function showImportExportModal() {
++ 1744   showModal('بکاپ و بازیابی',
++ 1745     '<div style="display:flex;flex-direction:column;gap:12px">' +
++ 1746       '<button class="btn-primary" onclick="exportData()" style="width:100%"><i class="fas fa-download"></i> خروجی JSON</button>' +
++ 1747       '<div class="form-group"><label>بازیابی از فایل JSON</label><input type="file" id="importFile" accept=".json"></div>' +
++ 1748       '<button class="btn-secondary" onclick="importData()" style="width:100%"><i class="fas fa-upload"></i> بازیابی</button>' +
++ 1749     '</div>',
++ 1750     null
++ 1751   );
++ 1752 }
++ 1753 
++ 1754 function exportData() {
++ 1755   const data = {
++ 1756     version: 1,
++ 1757     exportDate: new Date().toISOString(),
++ 1758     settings: state.settings,
++ 1759     topics: state.topics,
++ 1760     workouts: state.workouts,
++ 1761     nutrition: state.nutrition,
++ 1762     reviewStatus: state.reviewStatus
++ 1763   };
++ 1764   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
++ 1765   const url = URL.createObjectURL(blob);
++ 1766   const a = document.createElement('a');
++ 1767   a.href = url;
++ 1768   a.download = 'X135_backup_' + new Date().toISOString().slice(0,10) + '.json';
++ 1769   a.click();
++ 1770   URL.revokeObjectURL(url);
++ 1771   showToast('بکاپ دانلود شد');
++ 1772 }
++ 1773 
++ 1774 async function importData() {
++ 1775   const input = document.getElementById('importFile');
++ 1776   if (!input.files || !input.files[0]) { showToast('فایلی انتخاب نشده'); return; }
++ 1777   const text = await input.files[0].text();
++ 1778   try {
++ 1779     const data = JSON.parse(text);
++ 1780     if (data.settings) { state.settings = { ...state.settings, ...data.settings }; state.settings.id = 'main'; await dbPut(STORES.settings, state.settings); }
++ 1781     if (data.topics) {
++ 1782       await dbClear(STORES.topics);
++ 1783       state.topics = data.topics;
++ 1784       for (const t of state.topics) await dbPut(STORES.topics, t);
++ 1785     }
++ 1786     if (data.workouts) {
++ 1787       await dbClear(STORES.workouts);
++ 1788       state.workouts = data.workouts;
++ 1789       for (const w of state.workouts) await dbPut(STORES.workouts, w);
++ 1790     }
++ 1791     if (data.nutrition) {
++ 1792       await dbClear(STORES.nutrition);
++ 1793       state.nutrition = data.nutrition;
++ 1794       for (const n of state.nutrition) await dbPut(STORES.nutrition, n);
++ 1795     }
++ 1796     if (data.reviewStatus) {
++ 1797       await dbClear(STORES.reviewStatus);
++ 1798       state.reviewStatus = data.reviewStatus;
++ 1799       for (const [key, done] of Object.entries(data.reviewStatus)) {
++ 1800         await dbPut(STORES.reviewStatus, { id: key, done });
++ 1801       }
++ 1802     }
++ 1803     closeModal();
++ 1804     applySettingsToUI();
++ 1805     computeCurrentDay();
++ 1806     renderAll();
++ 1807     showToast('بازیابی با موفقیت انجام شد');
++ 1808   } catch (err) {
++ 1809     showToast('خطا در خواندن فایل');
++ 1810   }
++ 1811 }
++ 1812 
++ 1813 /* ========== MODAL SYSTEM ========== */
++ 1814 function showModal(title, bodyHtml, onConfirm) {
++ 1815   const overlay = document.createElement('div');
++ 1816   overlay.className = 'modal-overlay';
++ 1817   overlay.id = 'activeModal';
++ 1818   overlay.innerHTML =
++ 1819     '<div class="modal-box">' +
++ 1820       '<div class="modal-title">' + title + '</div>' +
++ 1821       '<div class="modal-body">' + bodyHtml + '</div>' +
++ 1822       (onConfirm ?
++ 1823         '<div class="modal-actions">' +
++ 1824           '<button class="btn-secondary" onclick="closeModal()">انصراف</button>' +
++ 1825           '<button class="btn-primary" id="modalConfirmBtn">تأیید</button>' +
++ 1826         '</div>' : '') +
++ 1827     '</div>';
++ 1828   document.body.appendChild(overlay);
++ 1829   overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
++ 1830   if (onConfirm) {
++ 1831     document.getElementById('modalConfirmBtn').addEventListener('click', () => {
++ 1832       onConfirm();
++ 1833       closeModal();
++ 1834     });
++ 1835   }
++ 1836 }
++ 1837 
++ 1838 function closeModal() {
++ 1839   const m = document.getElementById('activeModal');
++ 1840   if (m) m.remove();
++ 1841 }
++ 1842 
++ 1843 function showConfirmDialog(message, onConfirm) {
++ 1844   showModal('تأیید', '<p style="color:var(--text-secondary)">' + message + '</p>', onConfirm);
++ 1845 }
++ 1846 
++ 1847 /* ========== UTILITIES ========== */
++ 1848 const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
++ 1849 function toPersian(num) {
++ 1850   return String(num).replace(/\d/g, d => persianDigits[parseInt(d)]);
++ 1851 }
++ 1852 
++ 1853 function escapeHtml(str) {
++ 1854   const div = document.createElement('div');
++ 1855   div.textContent = str;
++ 1856   return div.innerHTML;
++ 1857 }
++ 1858 
++ 1859 function escapeAttr(str) {
++ 1860   return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
++ 1861 }
++ 1862 
++ 1863 function round2(n) { return Math.round(n * 100) / 100; }
++ 1864 
++ 1865 const weekdays = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنج‌شنبه','جمعه','شنبه'];
++ 1866 function getPersianWeekday(d) { return weekdays[d.getDay()]; }
++ 1867 
++ 1868 function formatDatePersian(dateStr) {
++ 1869   if (!dateStr) return '';
++ 1870   const d = new Date(dateStr);
++ 1871   return getPersianWeekday(d) + ' ' + toPersian(d.getDate()) + '/' + toPersian(d.getMonth()+1);
++ 1872 }
++ 1873 
++ 1874 /* ========== RENDER ALL ========== */
++ 1875 function renderAll() {
++ 1876   renderTopics();
++ 1877   renderDaySelector();
++ 1878   renderDailyReviews();
++ 1879   renderWorkouts();
++ 1880   renderWorkoutAlerts();
++ 1881   renderNutritionDisplay();
++ 1882   renderNutritionAlerts();
++ 1883 }
++ 1884 
++ 1885 /* ========== INIT ========== */
++ 1886 async function init() {
++ 1887   initTheme();
++ 1888   try {
++ 1889     await openDB();
++ 1890     await loadAll();
++ 1891   } catch (e) {
++ 1892     console.log('IndexedDB error: ' + JSON.stringify(e));
++ 1893   }
++ 1894   initWorkoutDate();
++ 1895   initNutritionDate();
++ 1896   if (!state.settings.startDate) {
++ 1897     document.getElementById('startDate').value = new Date().toISOString().split('T')[0];
++ 1898   }
++ 1899   document.getElementById('workoutDate').value = new Date().toISOString().split('T')[0];
++ 1900   document.getElementById('nutritionDate').value = new Date().toISOString().split('T')[0];
++ 1901 }
++ 1902 
++ 1903 init();
++ 1904 </script>
++ 1905 </body>
++ 1906 </html>
